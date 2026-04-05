@@ -1,6 +1,6 @@
 services:
   app:
-    image: satria-aii:latest
+    image: teguhyuhono/satria-aii:latest
     container_name: satria-aii-app
     restart: unless-stopped
     ports:
