@@ -68,6 +68,7 @@
     <div class="sidebar-area" id="sidebar-area">
         <div class="logo position-relative">
             <a href="{{ url('/dashboard') }}" class="d-block text-decoration-none position-relative">
+                <img src="https://logodix.com/logo/1017132.png" width="30" height="30" alt="logo-icon">
                 <span class="logo-text fw-bold text-dark">{{ config('app.name', 'Satria') }}</span>
             </a>
             <button class="sidebar-burger-menu bg-transparent p-0 border-0 opacity-0 z-n1 position-absolute top-50 end-0 translate-middle-y" id="sidebar-burger-menu">
