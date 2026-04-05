@@ -1,31 +1,45 @@
 @extends('layouts.app')
 @section('content')
 <div class="container-full">
-<div class="row">
-<div class="col-md-6 col-md-offset-3"  style="border: 4px solid #a1a1a1;">
-        <h2><center><font color="white">CREATE SJ</font></center></h2>
-        <center>
-        <form action="{{asset('create/sj')}}" class="form-horizontal" method="post">
-        {{ csrf_field() }}
-        <label for="">Tanggal Delivery</label>
-        <input type="date" class="form-control" name="tanggal_delivery" />
-        <label for="">Customer Name</label>
-        <select name="customer_code" id="" class="form-control">
-                @foreach($data as $row)
-                <option value="{{$row->customer_code}}">{{$row->customer_name}}</option>
-                @endforeach
-        </select>
-        <label for="">PDS Number</label>
-        <input type="text" class="form-control" name="pdsnumber" />
-        <label for="">SJ/DO AII</label>
-        <input type="text" class="form-control" name="doaii" />
-        <br>
-        <input type="submit" value="Create" class="btn btn-md btn-success">
-        <br> <hr>
-        </center>
-        </form>       
+        <div class="row">
+                <div class="col-lg-6 col-md-8 mx-auto">
+                        <div class="card bg-white border-0 rounded-3 mb-4">
+                                <div class="card-body p-4">
+                                        <h4 class="mb-4">Create SJ</h4>
+
+                                        <form action="{{ asset('create/sj') }}" method="post">
+                                                {{ csrf_field() }}
+
+                                                <div class="mb-3">
+                                                        <label class="form-label">Tanggal Delivery</label>
+                                                        <input type="date" class="form-control" name="tanggal_delivery" required>
+                                                </div>
+
+                                                <div class="mb-3">
+                                                        <label class="form-label">Customer Name</label>
+                                                        <select name="customer_code" class="form-control" required>
+                                                                @foreach($data as $row)
+                                                                        <option value="{{ $row->customer_code }}">{{ $row->customer_name }}</option>
+                                                                @endforeach
+                                                        </select>
+                                                </div>
+
+                                                <div class="mb-3">
+                                                        <label class="form-label">PDS Number</label>
+                                                        <input type="text" class="form-control" name="pdsnumber" required>
+                                                </div>
+
+                                                <div class="mb-3">
+                                                        <label class="form-label">SJ/DO AII</label>
+                                                        <input type="text" class="form-control" name="doaii" required>
+                                                </div>
+
+                                                <button type="submit" class="btn btn-success">Create</button>
+                                        </form>
+                                </div>
+                        </div>
         </div>
-</div>
+        </div>
 </div>
 
 @endsection

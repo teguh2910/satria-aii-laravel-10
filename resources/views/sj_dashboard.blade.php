@@ -1,40 +1,42 @@
 @extends('layouts.app')
 @section('content')
 <div class="container-full">
-    <div class="row">        
-        <div class="col-md-12">
-            <div class="nav-tabs-custom">
-                <ul class="nav nav-tabs">
-                <li class="active"><a class=""><big><big><big><font face="calibri">Surat Jalan </font></big></big></big> <span class="label label-warning"></span></a></li>
-                </ul>
-                <div class="panel-body">
-                
-                    @if(Auth::user()->name == 'ppic' || Auth::user()->name == 'pc')
-                    <a href="{{asset("/sj_balik")}}" class="btn btn-md btn-warning">Scan Disini >> SJ/DO From Customer</a>
-                    <br><br>
-                    @elseif(Auth::user()->name == 'finance')                
-                    <a href="{{asset("/terima_finance")}}" class="btn btn-md btn-success">SCAN FINANCE</a>
-                    <br><br>
-                    @endif
+    <div class="row">
+        <div class="col-12">
+            <div class="card bg-white border-0 rounded-3 mb-4">
+                <div class="card-body p-4">
+                    <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-4">
+                        <h4 class="mb-0">Surat Jalan</h4>
+
+                        @if(Auth::user()->name == 'ppic' || Auth::user()->name == 'pc')
+                            <a href="{{ asset('/sj_balik') }}" class="btn btn-warning">Scan Disini >> SJ/DO From Customer</a>
+                        @elseif(Auth::user()->name == 'finance')
+                            <a href="{{ asset('/terima_finance') }}" class="btn btn-success">Scan Finance</a>
+                        @endif
+                    </div>
+
                     @if(Session::has('message'))
-                    <p class="alert {{ Session::get('alert-class', 'alert-info') }}">{{ Session::get('message') }}</p>
+                        <div class="alert {{ Session::get('alert-class', 'alert-info') }}">{{ Session::get('message') }}</div>
                     @elseif(Session::has('danger'))
-                    <p class="alert {{ Session::get('alert-class', 'alert-danger') }}">{{ Session::get('danger') }}</p>
+                        <div class="alert {{ Session::get('alert-class', 'alert-danger') }}">{{ Session::get('danger') }}</div>
                     @endif
-                    <table id="sj_ppic" class="table table-bordered table-condensed table-hover dt-responsive" width="100%">
-                <thead>                 
-                <tr class="info">
-                <th><small>TANGGAL WAKTU UPLOAD</small></th>    
-                <th><small>TANGGAL_DELIVERY</small></th>    
-                <th><small>CUSTOMER_CODE</small></th>
-                <th><small>CUSTOMER_NAME</small></th>
-                <th><small>PDSNUMBER</small></th>
-                <th><small>DOAII</small></th>
-                <th><small>SJ BALIK</small></th>
-                <th><small>FINANCE</small></th>                
-            </tr>
-        </thead>                    
-            </table>
+
+                    <div class="table-responsive">
+                        <table id="sj_ppic" class="table table-striped table-hover align-middle w-100">
+                            <thead>
+                                <tr>
+                                    <th><small>TANGGAL WAKTU UPLOAD</small></th>
+                                    <th><small>TANGGAL_DELIVERY</small></th>
+                                    <th><small>CUSTOMER_CODE</small></th>
+                                    <th><small>CUSTOMER_NAME</small></th>
+                                    <th><small>PDSNUMBER</small></th>
+                                    <th><small>DOAII</small></th>
+                                    <th><small>SJ BALIK</small></th>
+                                    <th><small>FINANCE</small></th>
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>

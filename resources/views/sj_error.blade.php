@@ -1,21 +1,16 @@
 @extends('layouts.app')
 @section('content')
 <div class="container-full">
-    <div class="row">        
-        <div class="col-md-12">
-            <div class="box box-primary">
-                <div class="box-header with-border">
-                    <h3 class="box-title"><i class="fa fa-exclamation-triangle"></i> SJ/DO Error Log</h3>
-                    <div class="box-tools pull-right">
-                        <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse">
-                            <i class="fa fa-minus"></i>
-                        </button>
-                    </div>
-                </div>
-                <div class="box-body">
-                    <table id="sj_error_table" class="table table-striped table-bordered table-hover dt-responsive" width="100%">
+    <div class="row">
+        <div class="col-12">
+            <div class="card bg-white border-0 rounded-3 mb-4">
+                <div class="card-body p-4">
+                    <h4 class="mb-4">SJ/DO Error Log</h4>
+
+                    <div class="table-responsive">
+                        <table id="sj_error_table" class="table table-striped table-hover align-middle w-100">
                         <thead>                 
-                            <tr class="bg-primary">
+                            <tr>
                                 <th>No SJ/DO</th>
                                 <th>User PPIC Scan</th>
                                 <th>Waktu Scan</th>                
@@ -29,17 +24,6 @@
         </div>
     </div>
 </div>
-
-<style>
-    .bg-primary {
-        background-color: #0097bc !important;
-        color: white;
-    }
-
-    .table tbody tr:hover {
-        background-color: #f5f5f5;
-    }
-</style>
 
 @endsection
 

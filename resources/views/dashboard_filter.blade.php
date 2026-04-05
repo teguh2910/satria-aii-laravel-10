@@ -1,79 +1,77 @@
 @extends('layouts.app')
 @section('content')
 <div class="container-full">
-    <div class="row">        
-        <div class="col-md-12">
+    <div class="row">
+        <div class="col-12">
             @if(Session::has('message'))
-            <p class="alert {{ Session::get('alert-class', 'alert-info') }}">{{ Session::get('message') }}</p>
+                <div class="alert {{ Session::get('alert-class', 'alert-info') }}">{{ Session::get('message') }}</div>
             @endif
             @if(Session::has('warning'))
-            <p class="alert {{ Session::get('alert-class', 'alert-danger') }}">{{ Session::get('warning') }}</p>
+                <div class="alert {{ Session::get('alert-class', 'alert-danger') }}">{{ Session::get('warning') }}</div>
             @endif
-            <div class="nav-tabs-custom">
-                <ul class="nav nav-tabs">
-                <li class="active"><a class=""><big><big><big><font face="calibri">Surat Jalan </font></big></big></big> <span class="label label-warning"></span></a></li>
-                </ul>
-                <div class="panel-body">
-                    <table id="sj_filter" class="table table-bordered table-condensed table-hover dt-responsive" width="100%">
-                <thead>          
-                       
-                <tr class="info">                
-                <th><small>ID</small></th>    
-                <th><small>TANGGAL WAKTU UPLOAD</small></th>    
-                <th><small>TANGGAL_DELIVERY</small></th>
-                <th><small>CUSTOMER_CODE</small></th>    
-                <th><small>CUSTOMER_NAME</small></th>
-                <th><small>PDSNUMBER</small></th>
-                <th><small>DOAII</small></th>
-                <th><small>SJ BALIK</small></th>
-                <th><small>FINANCE</small></th>
-                <th><small>SJ Error</small></th>
-                </tr>
-                <tr>
-                <th></th>
-                <th></th>
-                <th></th>
-                <th><input type="text" placeholder="Search Customer Code" class="form-control" /></th>
-                <th></th>
-                <th></th>
-                <th></th>
-                <th>
-                    <select class="form-control column-filter" data-column="7">
-                        <option value="">All</option>
-                        <option value="__BLANK__">Blank</option>
-                        <option value="__NOT_BLANK__">Not Blank</option>
-                    </select>
-                </th>
-                <th>
-                    <select class="form-control column-filter" data-column="8">
-                        <option value="">All</option>
-                        <option value="__BLANK__">Blank</option>
-                        <option value="__NOT_BLANK__">Not Blank</option>
-                    </select>
-                </th>
-                <th></th>
-                </tr>
-                </thead> 
-                <tbody>
-                @foreach($data as $row)
-                <tr>
-                <td>{{$row->id}}</td>
-                <td>{{$row->created_at}}</td>
-                <td>{{ $row->tanggal_delivery ? \Carbon\Carbon::parse($row->tanggal_delivery)->format('Y-m-d') : '' }}</td>
-                <td>{{$row->customer_code}}</td>
-                <td>{{$row->customer_name}}</td>
-                <td>{{$row->pdsnumber}}</td>
-                <td>{{$row->doaii}}</td>
-                <td>
-                    {{ $row->sj_balik ? $row->sj_balik : ($row->updated_at ? \Carbon\Carbon::parse($row->updated_at)->format('Y-m-d H:i') : '') }}
-                </td>
-                <td>{{$row->terima_finance}}</td>
-                <td>{{ $row->updated_at ? \Carbon\Carbon::parse($row->updated_at)->format('Y-m-d H:i') : '' }}</td>
-                </tr>
-                @endforeach
-                </tbody>
-                          
-            </table>
+
+            <div class="card bg-white border-0 rounded-3 mb-4">
+                <div class="card-body p-4">
+                    <h4 class="mb-4">Surat Jalan</h4>
+
+                    <div class="table-responsive">
+                        <table id="sj_filter" class="table table-striped table-hover align-middle w-100">
+                            <thead>
+                                <tr>
+                                    <th><small>ID</small></th>
+                                    <th><small>TANGGAL WAKTU UPLOAD</small></th>
+                                    <th><small>TANGGAL_DELIVERY</small></th>
+                                    <th><small>CUSTOMER_CODE</small></th>
+                                    <th><small>CUSTOMER_NAME</small></th>
+                                    <th><small>PDSNUMBER</small></th>
+                                    <th><small>DOAII</small></th>
+                                    <th><small>SJ BALIK</small></th>
+                                    <th><small>FINANCE</small></th>
+                                    <th><small>SJ Error</small></th>
+                                </tr>
+                                <tr>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                    <th><input type="text" placeholder="Search Customer Code" class="form-control" /></th>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                    <th>
+                                        <select class="form-control column-filter" data-column="7">
+                                            <option value="">All</option>
+                                            <option value="__BLANK__">Blank</option>
+                                            <option value="__NOT_BLANK__">Not Blank</option>
+                                        </select>
+                                    </th>
+                                    <th>
+                                        <select class="form-control column-filter" data-column="8">
+                                            <option value="">All</option>
+                                            <option value="__BLANK__">Blank</option>
+                                            <option value="__NOT_BLANK__">Not Blank</option>
+                                        </select>
+                                    </th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach($data as $row)
+                                    <tr>
+                                        <td>{{ $row->id }}</td>
+                                        <td>{{ $row->created_at }}</td>
+                                        <td>{{ $row->tanggal_delivery ? \Carbon\Carbon::parse($row->tanggal_delivery)->format('Y-m-d') : '' }}</td>
+                                        <td>{{ $row->customer_code }}</td>
+                                        <td>{{ $row->customer_name }}</td>
+                                        <td>{{ $row->pdsnumber }}</td>
+                                        <td>{{ $row->doaii }}</td>
+                                        <td>{{ $row->sj_balik ? $row->sj_balik : ($row->updated_at ? \Carbon\Carbon::parse($row->updated_at)->format('Y-m-d H:i') : '') }}</td>
+                                        <td>{{ $row->terima_finance }}</td>
+                                        <td>{{ $row->updated_at ? \Carbon\Carbon::parse($row->updated_at)->format('Y-m-d H:i') : '' }}</td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>
