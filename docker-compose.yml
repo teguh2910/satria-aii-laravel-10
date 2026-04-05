@@ -1,0 +1,30 @@
+services:
+  app:
+    image: satria-aii:latest
+    container_name: satria-aii-app
+    restart: unless-stopped
+    ports:
+      - "8080:80"
+    environment:
+      - APP_ENV=production
+      - APP_DEBUG=false
+      - LOG_CHANNEL=stderr
+      - DB_HOST=192.168.100.21
+      - DB_PORT=3306
+      - DB_DATABASE=${DB_DATABASE:-SATRIA_AII}
+      - DB_USERNAME=root
+      - DB_PASSWORD=${DB_PASSWORD:-changeme}
+      - SESSION_DRIVER=file
+    networks:
+      - satria-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost/"]
+      interval: 30s
+      timeout: 3s
+      retries: 3
+      start_period: 5s
+
+
+networks:
+  satria-network:
+    driver: bridge
