@@ -1,0 +1,14 @@
+  name: Deploy to staging
+  uses: appleboy/ssh-action@v1
+  with:
+    host: ${{ secrets.STAGING_HOST }}
+    username: root
+    key: ${{ secrets.SSH_KEY }}
+    script: |
+      podman pull ghcr.io/${{ github.repository }}:staging
+      podman stop satria-aii-staging || true
+      podman rm satria-aii-staging || true
+      podman run -d \
+        --name satria-aii-staging \
+        -p 8080:80 \
+        ghcr.io/${{ github.repository }}:staging
