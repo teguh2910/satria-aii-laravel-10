@@ -2,7 +2,6 @@ services:
   app:
     image: localhost/satria-aii:v1
     container_name: satria-aii-app
-    restart: unless-stopped
     ports:
       - "8081:80"
     environment:
@@ -26,7 +25,6 @@ services:
   db:
     image: mysql:8.0
     container_name: satria-aii-db
-    restart: unless-stopped
     environment:
       - MYSQL_ROOT_PASSWORD=secret
       - MYSQL_DATABASE=SATRIA_AII
