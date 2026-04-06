@@ -13,7 +13,7 @@ services:
       - DB_PORT=3306
       - DB_DATABASE=SATRIA_AII
       - DB_USERNAME=root
-      - DB_PASSWORD=${DB_PASSWORD:-changeme}\
+      - DB_PASSWORD=secret
       - SESSION_DRIVER=file
     networks:
       - satria-network
@@ -23,8 +23,18 @@ services:
       timeout: 3s
       retries: 3
       start_period: 5s
-
+  db:
+    image: mysql:8.0
+    container_name: satria-aii-db
+    restart: unless-stopped
+    environment:
+      - MYSQL_ROOT_PASSWORD=secret
+      - MYSQL_DATABASE=SATRIA_AII
+    volumes:
+      - db_data:/var/lib/mysql
 
 networks:
   satria-network:
     driver: bridge
+volumes:
+  db_data:
