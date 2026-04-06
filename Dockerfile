@@ -1,21 +1,33 @@
-# Menggunakan existing image
-FROM teguhyuhono/satria-eko:latest
+# Menggunakan image PHP 8.1 FPM dengan Alpine
+FROM php:8.1-fpm-alpine
+
+# Install system dependencies
+RUN apk add --no-cache \
+    nginx \
+    supervisor \
+    curl \
+    git \
+    libpng \
+    libjpeg-turbo \
+    freetype \
+    libzip \
+    mysql-client \
+    && apk add --no-cache --virtual .build-deps \
+        libpng-dev \
+        libjpeg-turbo-dev \
+        freetype-dev \
+        libzip-dev \
+    && docker-php-ext-configure gd --with-freetype --with-jpeg \
+    && docker-php-ext-install gd zip pdo_mysql mysqli \
+    && apk del --no-cache .build-deps
+
+# Install Composer
+COPY --from=composer:2.7 /usr/bin/composer /usr/bin/composer
 
 # Copy Nginx configuration
 COPY docker/nginx.conf /etc/nginx/nginx.conf
 COPY docker/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 
-#remove existing entrypoint script
-RUN rm -rf /entrypoint.sh
-
-# copy entrypoint script
-COPY docker/entrypoint.sh /entrypoint.sh
-RUN chmod +x /entrypoint.sh
-
-#remove folder /var/www/html
-RUN rm -rf /var/www/html
-#create folder /var/www/html
-RUN mkdir -p /var/www/html
 
 WORKDIR /var/www/html
 
@@ -40,6 +52,14 @@ RUN mkdir -p /var/www/html/storage/framework/cache \
     && mkdir -p /var/www/html/storage/framework/views \
     && mkdir -p /var/www/html/storage/logs \
     && chown -R www-data:www-data /var/www/html
+
+# Set PHP production configuration
+RUN mv "$PHP_INI_DIR/php.ini-production" "$PHP_INI_DIR/php.ini" \
+    && echo "memory_limit = 256M" >> "$PHP_INI_DIR/conf.d/memory-limit.ini" \
+    && echo "upload_max_filesize = 50M" >> "$PHP_INI_DIR/conf.d/upload.ini" \
+    && echo "post_max_size = 50M" >> "$PHP_INI_DIR/conf.d/upload.ini" \
+    && echo "max_execution_time = 300" >> "$PHP_INI_DIR/conf.d/execution-time.ini" \
+    && echo "opcache.enable=1" >> "$PHP_INI_DIR/conf.d/opcache.ini"
 
 EXPOSE 80
 
