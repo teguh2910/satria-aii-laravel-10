@@ -1,6 +1,6 @@
 services:
   app:
-    image: localhost/teguhyuhono/satria-aii:arm
+    image: localhost/satria-aii:v1
     container_name: satria-aii-app
     restart: unless-stopped
     ports:
