@@ -12,7 +12,11 @@ permissions:
   packages: write
 
 jobs:
-  deploy:    
+  deploy:
+    if: github.event.pull_request.merged == true
+    runs-on: ubuntu-latest
+
+    steps:      
       - name: Deploy to staging
         uses: appleboy/ssh-action@v1
         with:
