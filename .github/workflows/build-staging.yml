@@ -1,0 +1,32 @@
+name: Build & Push Staging Image
+
+on:
+  pull_request:
+    branches:
+      - staging
+    types:
+      - closed
+
+permissions:
+  contents: read
+  packages: write
+
+jobs:
+  build:
+    if: github.event.pull_request.merged == true
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Login registry
+        run: echo ${{ secrets.GITHUB_TOKEN }} | docker login ghcr.io -u ${{ github.actor }} --password-stdin
+
+      - name: Build image
+        run: |
+          docker build -t ghcr.io/${{ github.repository }}:staging .
+
+      - name: Push image
+        run: |
+          docker push ghcr.io/${{ github.repository }}:staging
