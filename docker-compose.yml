@@ -1,9 +1,9 @@
 services:
   app:
-    image: localhost/satria-aii:v1
+    image: localhost/teguhyuhono/satria-aii:arm
     container_name: satria-aii-app
     ports:
-      - "8081:80"
+      - "8082:80"
     environment:
       - APP_ENV=production
       - APP_DEBUG=false
@@ -16,6 +16,8 @@ services:
       - SESSION_DRIVER=file
     networks:
       - satria-network
+    volumes:
+      - ./:/var/www/html
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost/"]
       interval: 30s
@@ -25,6 +27,8 @@ services:
   db:
     image: mysql:8.0
     container_name: satria-aii-db
+    networks:
+      - satria-network
     environment:
       - MYSQL_ROOT_PASSWORD=secret
       - MYSQL_DATABASE=SATRIA_AII
